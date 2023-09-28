@@ -45,9 +45,9 @@ public class DriveTrain extends SubsystemBase
     leftDriveTalon.setSensorPhase(true);
     rightDriveTalon.setSensorPhase(true);
 
-    leftDriveTalon.configFactoryDefault();
+    leftDriveTalon.configFactoryDefault(); //resets leftDriveTalon
     leftDriveTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10); //This sets up the encoder to track rotation of the motor
-    rightDriveTalon.configFactoryDefault();
+    rightDriveTalon.configFactoryDefault(); //resets rightDriveTalon
     rightDriveTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 
   }
