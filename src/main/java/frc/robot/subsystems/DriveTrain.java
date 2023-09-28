@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.SPI;
@@ -18,43 +19,41 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-import com.kauailabs.navx.frc.AHRS;
-
 public class DriveTrain extends SubsystemBase 
 {
-  private final WPI_TalonSRX leftDriveTalon;
+  private final WPI_TalonSRX leftDriveTalon; 
   private final WPI_TalonSRX rightDriveTalon;
 
-  private AHRS navx = new AHRS(SPI.Port.kMXP);
+  private AHRS navx = new AHRS(SPI.Port.kMXP); //This is creating a new object within the AHRS class called navx
 
-  private ShuffleboardTab DTTab = Shuffleboard.getTab("DriveTrain");
-  private GenericEntry LeftVoltage = DTTab.add("Left Voltage", 0.0).getEntry();
-  private GenericEntry RightVoltage = DTTab.add("Right Voltage", 0.0).getEntry();
+  private ShuffleboardTab DTTab = Shuffleboard.getTab("DriveTrain"); //This titles the variable DTTab as DriveTrain.
+  private GenericEntry LeftVoltage = DTTab.add("Left Voltage", 0.0).getEntry(); //updates DTTab with LeftVoltage with a value of 0.0, and stores the return value of getEntry into LeftVoltage
+  private GenericEntry RightVoltage = DTTab.add("Right Voltage", 0.0).getEntry(); //updates DTTab with RightVoltage with a value of 0.0, and stores the return value of getEntry into RighthVoltage
 
   /** Creates a new DriveTrain */
   public DriveTrain() 
   {
-    leftDriveTalon = new WPI_TalonSRX(Constants.DriveTrainPorts.LeftDriveTalonPort);
-    rightDriveTalon = new WPI_TalonSRX(Constants.DriveTrainPorts.RightDriveTalonPort);
+    leftDriveTalon = new WPI_TalonSRX(Constants.DriveTrainPorts.LeftDriveTalonPort); //This sets up the leftDriveTalon
+    rightDriveTalon = new WPI_TalonSRX(Constants.DriveTrainPorts.RightDriveTalonPort); //This sets up the rightDriveTalon
   
-    leftDriveTalon.setNeutralMode(NeutralMode.Coast);
-    rightDriveTalon.setNeutralMode(NeutralMode.Coast);
+    leftDriveTalon.setNeutralMode(NeutralMode.Coast); //This makes sure that the leftDriveTalon is set to neutral
+    rightDriveTalon.setNeutralMode(NeutralMode.Coast); //This makes sure that the leftDriveTalon is set to neutral
 
-    leftDriveTalon.setInverted(true);
-    rightDriveTalon.setInverted(false);
+    leftDriveTalon.setInverted(true); //This makes sure the leftDriveTalon is inverted in perspective to the rightDriveTalon so it can drive forward and bakcword properly
+    rightDriveTalon.setInverted(false); //This makes sure the rightDriveTalon is inverted in perspective to the leftDriveTalon so it can drive forward and bakcword properly
 
     leftDriveTalon.setSensorPhase(true);
     rightDriveTalon.setSensorPhase(true);
 
     leftDriveTalon.configFactoryDefault();
-    leftDriveTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+    leftDriveTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10); //This sets up the encoder to track rotation of the motor
     rightDriveTalon.configFactoryDefault();
     rightDriveTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 
   }
 
-  public void tankDrive(double leftSpeed, double rightSpeed) {
-    rightDriveTalon.set(rightSpeed);
+  public void tankDrive(double leftSpeed, double rightSpeed) {  //This will drive the robot with a certain speed
+    rightDriveTalon.set(rightSpeed); 
     leftDriveTalon.set(leftSpeed);
   }
 
@@ -67,7 +66,7 @@ public class DriveTrain extends SubsystemBase
     return (leftDriveTalon.getSelectedSensorPosition(0) + rightDriveTalon.getSelectedSensorPosition(0)) / 2.0;
   }
  
-  public double getAngle(){
+  public double getAngle(){ //Gets the robot's current angle
     return navx.getAngle(); 
   }
  
