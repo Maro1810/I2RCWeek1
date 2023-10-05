@@ -37,17 +37,17 @@ public class DriveTrain extends SubsystemBase
     rightDriveTalon = new WPI_TalonSRX(Constants.DriveTrainPorts.RightDriveTalonPort); //This sets up the rightDriveTalon
   
     leftDriveTalon.setNeutralMode(NeutralMode.Coast); //This makes sure that the leftDriveTalon is set to neutral
-    rightDriveTalon.setNeutralMode(NeutralMode.Coast); //This makes sure that the leftDriveTalon is set to neutral
+    rightDriveTalon.setNeutralMode(NeutralMode.Coast); //This makes sure that the rightDriveTalon is set to neutral
 
-    leftDriveTalon.setInverted(true); //This makes sure the leftDriveTalon is inverted in perspective to the rightDriveTalon so it can drive forward and bakcword properly
-    rightDriveTalon.setInverted(false); //This makes sure the rightDriveTalon is inverted in perspective to the leftDriveTalon so it can drive forward and bakcword properly
+    leftDriveTalon.setInverted(true); //This makes sure the leftDriveTalon is inverted in perspective to the rightDriveTalon so it can drive forward and backward properly
+    rightDriveTalon.setInverted(false); //This makes sure the rightDriveTalon is inverted in perspective to the leftDriveTalon so it can drive forward and backward properly
 
     leftDriveTalon.setSensorPhase(true);
     rightDriveTalon.setSensorPhase(true);
 
-    leftDriveTalon.configFactoryDefault();
+    leftDriveTalon.configFactoryDefault(); //resets leftDriveTalon
     leftDriveTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10); //This sets up the encoder to track rotation of the motor
-    rightDriveTalon.configFactoryDefault();
+    rightDriveTalon.configFactoryDefault(); //resets rightDriveTalon
     rightDriveTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 
   }
@@ -58,8 +58,8 @@ public class DriveTrain extends SubsystemBase
   }
 
   public void resetEncoders() {
-    leftDriveTalon.setSelectedSensorPosition(0,0,10);
-    rightDriveTalon.setSelectedSensorPosition(0,0,10);
+    leftDriveTalon.setSelectedSensorPosition(0,0,10); //Sets the sensor position of the leftDriveTalon to 0, 0, 10
+    rightDriveTalon.setSelectedSensorPosition(0,0,10); //Sets the sensor position of the rightDriveTalon to 0, 0, 10
   }
 
   public double getTicks() {
