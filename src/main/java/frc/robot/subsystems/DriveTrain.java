@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.math.util.Units;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.SPI;
@@ -40,7 +41,7 @@ public class DriveTrain extends SubsystemBase
     rightDriveTalon.setNeutralMode(NeutralMode.Coast); //This makes sure that the rightDriveTalon is set to neutral
 
     leftDriveTalon.setInverted(true); //This makes sure the leftDriveTalon is inverted in perspective to the rightDriveTalon so it can drive forward and backward properly
-    rightDriveTalon.setInverted(false); //This makes sure the rightDriveTalon is inverted in perspective to the leftDriveTalon so it can drive forward and backward properly
+    rightDriveTalon.setInverted(true); //This makes sure the rightDriveTalon is inverted in perspective to the leftDriveTalon so it can drive forward and backward properly
 
     leftDriveTalon.setSensorPhase(true);
     rightDriveTalon.setSensorPhase(true);
@@ -66,6 +67,9 @@ public class DriveTrain extends SubsystemBase
     return (leftDriveTalon.getSelectedSensorPosition(0) + rightDriveTalon.getSelectedSensorPosition(0)) / 2.0;
   }
  
+  public double getMeters(){
+    return (Units.inchesToMeters(6)*Math.PI /4096*getTicks());
+  }  
   public double getAngle(){ //Gets the robot's current angle
     return navx.getAngle(); 
   }
