@@ -31,6 +31,8 @@ public class RobotContainer {
 
   private final EncoderDrive encoderDrive = new EncoderDrive(dt, 1.0);
 
+  private final PIDTurnCCW pidTurnCCW = new PIDTurnCCW(dt, 0);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     dt.setDefaultCommand(tankDrive);
@@ -58,6 +60,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return encoderDrive;
+    return pidTurnCCW;
   }
 }
