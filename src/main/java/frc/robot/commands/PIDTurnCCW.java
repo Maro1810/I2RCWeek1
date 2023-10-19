@@ -16,12 +16,12 @@ public class PIDTurnCCW extends CommandBase {
 
   
   /** Creates a new PIDTurnCCW. */
-  public PIDTurnCCW(DriveTrain dt, double setPointAngle) {
-    this.dt = dt;
-    this.setPointAngle = setPointAngle;
+  public PIDTurnCCW(DriveTrain dt, double setPointAngle) { 
+    this.dt = dt; //Sets variable dt = to dt
+    this.setPointAngle = setPointAngle; //Sets setPointAngle = to setPointAngle
     addRequirements(dt);
-    pid.setTolerance(5.0);
-    if(setPointAngle > 0 ) { //counterclockwise turn
+    pid.setTolerance(5.0); //Tells the robot how much it can overshoot or undershoot by
+    if(setPointAngle > 0 ) { //Counterclockwise turn
       motorSign = 1;
     }
     else {
@@ -34,27 +34,27 @@ public class PIDTurnCCW extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     dt.resetNavx();
-     dt.tankDrive(0, 0);
+     dt.resetNavx(); //Resets the Navx gyroscope
+     dt.tankDrive(0, 0); //Sets the motor power to 0
   }
 
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double output = pid.calculate(dt.getAngle(), setPointAngle);
+    double output = pid.calculate(dt.getAngle(), setPointAngle); //Gets the current angle and calculates how far off it is from the final angle
     dt.tankDrive(-output*motorSign, output*motorSign);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    dt.tankDrive(0,0);
+    dt.tankDrive(0,0); //Sets motor power to 0
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return pid.atSetpoint();
+    return pid.atSetpoint(); //If this is true, the robot is at the setPointAngle
   }
 }
